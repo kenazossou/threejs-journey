@@ -1,0 +1,23 @@
+{
+  "name": "mythreejsjourney",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "vite": "^7.3.0",
+    "vite-plugin-restart": "^2.0.0"
+  },
+  "dependencies": {
+    "gsap": "^3.14.2",
+    "lil-gui": "^0.21.0",
+    "three": "^0.182.0"
+  }
+}
