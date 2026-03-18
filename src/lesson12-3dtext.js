@@ -42,7 +42,7 @@ matcapTexture.colorSpace = THREE.SRGBColorSpace;
  * Fonts
  */
 const fontLoader = new FontLoader();
-fontLoader.load('/fonts/helvetiker_regular.typeface.json',
+fontLoader.load('./fonts/helvetiker_regular.typeface.json',
     (font) =>
     {
         console.log('Loaded !');

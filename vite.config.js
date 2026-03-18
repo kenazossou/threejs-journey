@@ -5,6 +5,7 @@ import restart from 'vite-plugin-restart'
 export default defineConfig({
     root: 'src/', // Sources files (typically where index.html is)
     publicDir: '../static/', // Path from "root" to static assets (files that are served as they are)
+    base: "/threejs-journey/",
     server: {
       host: true,
       port: 5173,
