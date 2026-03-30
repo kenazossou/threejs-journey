@@ -1,64 +1,64 @@
+// lesson08-geometries.js
 import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; // addons is an allias for 'examples/jsm'
 
-// Scene
-const scene = new THREE.Scene();
+export default function init(canvas){
+    // Scene
+    const scene = new THREE.Scene();
 
-/**
- * Axes helper
- */
-const axesHelper = new THREE.AxesHelper(2);
-scene.add(axesHelper);
+    /**
+     * Axes helper
+     */
+    const axesHelper = new THREE.AxesHelper(2);
+    scene.add(axesHelper);
 
-//////////////////////////////////////////////
-////////// Builtin geometry creation //////////
-//////////////////////////////////////////////
-const CreateBuiltinGeometry = () =>
-{
-    return new THREE.Mesh(
-        new THREE.SphereGeometry(1, 32, 32),
-        new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
-    )
-}
+    //////////////////////////////////////////////
+    ////////// Builtin geometry creation //////////
+    //////////////////////////////////////////////
+    const CreateBuiltinGeometry = () =>
+    {
+        return new THREE.Mesh(
+            new THREE.SphereGeometry(1, 32, 32),
+            new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+        )
+    }
 
-//////////////////////////////////////////////
-////////// Custom geometry creation //////////
-//////////////////////////////////////////////
-const CreateCustomGeometry = () =>
-{
-    // For this example, we will create a simple triangle
+    //////////////////////////////////////////////
+    ////////// Custom geometry creation //////////
+    //////////////////////////////////////////////
+    const CreateCustomGeometry = () =>
+    {
+        // For this example, we will create a simple triangle
 
-    // create an empty BufferGeometry
-    const geometry = new THREE.BufferGeometry();
+        // create an empty BufferGeometry
+        const geometry = new THREE.BufferGeometry();
 
-    // Create a native JavaScript Float32Array to store our mesh vertices locations
-    // A triangle need 3 vertices and vertex position has 3 components (x, y, z)
-    const positionsArray = new Float32Array([
-        0, 0, 0, // First vertex
-        0, 1, 0, // Second vertex
-        1, 0, 0  // Third vertex
-    ]);
+        // Create a native JavaScript Float32Array to store our mesh vertices locations
+        // A triangle need 3 vertices and vertex position has 3 components (x, y, z)
+        const positionsArray = new Float32Array([
+            0, 0, 0, // First vertex
+            0, 1, 0, // Second vertex
+            1, 0, 0  // Third vertex
+        ]);
 
 
-    // Make that array a BufferAttribute to be able to send it to the BufferGeometry
-    const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3); // 3 corresponds to how much values make one vertex attribute
-    
-    // Add this BufferAttribute to the BufferGeometry
-    // The faces (here one) are automatically created following the order of the vertices
-    geometry.setAttribute("position", positionsAttribute); // Three internal shaders look for name value 'position' to position the vertices
+        // Make that array a BufferAttribute to be able to send it to the BufferGeometry
+        const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3); // 3 corresponds to how much values make one vertex attribute
+        
+        // Add this BufferAttribute to the BufferGeometry
+        // The faces (here one) are automatically created following the order of the vertices
+        geometry.setAttribute("position", positionsAttribute); // Three internal shaders look for name value 'position' to position the vertices
 
-    return new THREE.Mesh(
-        geometry,
-        new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
-    );
-}
+        return new THREE.Mesh(
+            geometry,
+            new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+        );
+    }
 
-//////////////////////////////////////////////
-//////////// Geometry rendering //////////////
-//////////////////////////////////////////////
-const RenderGeometry = () =>
-{
+    //////////////////////////////////////////////
+    //////////// Geometry rendering //////////////
+    //////////////////////////////////////////////
     // // Builtin geometry
     // const mesh = CreateBuiltinGeometry();
 
@@ -70,29 +70,11 @@ const RenderGeometry = () =>
     // Add object to the scene
     scene.add(mesh);
 
-    // Canvas
-    const canvas = document.querySelector('canvas.webgl');
-
     // Size
     const sizes = {
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: canvas.clientWidth,
+        height: canvas.clientHeight
     };
-
-    window.addEventListener('resize', () =>
-    {
-        // Update sizes
-        sizes.width = window.innerWidth;
-        sizes.height = window.innerHeight;
-
-        // Update camera
-        camera.aspect = sizes.width / sizes.height;
-        camera.updateProjectionMatrix();
-
-        // Update renderer
-        renderer.setSize(sizes.width,  sizes.height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    });
 
     window.addEventListener('keydown', (event) =>
     {
@@ -140,23 +122,22 @@ const RenderGeometry = () =>
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
 
-    //Cursor
-    const cursor = {
-        x: 0,
-        y: 0
-    };
-
-    window.addEventListener('mousemove', (event) =>
-    {
-        cursor.x = event.clientX / sizes.width - 0.5;
-        cursor.y = - (event.clientY / sizes.height - 0.5);
-    });
-
     // Renderer
     const renderer = new THREE.WebGLRenderer({
         canvas: canvas
     });
     renderer.setSize(sizes.width, sizes.height);
+
+    const resize = () => {
+        const width = canvas.clientWidth
+        const height = canvas.clientHeight
+
+        renderer.setSize(width, height, false)
+        camera.aspect = width / height
+        camera.updateProjectionMatrix()
+    }
+    window.addEventListener('resize', resize)
+    resize()        
 
     const tick = () =>
     {
@@ -172,5 +153,3 @@ const RenderGeometry = () =>
     }
     tick();
 }
-
-RenderGeometry();
