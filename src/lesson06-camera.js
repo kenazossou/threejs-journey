@@ -1,18 +1,18 @@
+// lesson06-camera.js
 import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; // addons is an allias for 'examples/jsm'
 
-// Scene
-const scene = new THREE.Scene();
+export default function init(canvas){
+    // Scene
+    const scene = new THREE.Scene();
 
-/**
- * Axes helper
- */
-const axesHelper = new THREE.AxesHelper(2);
-scene.add(axesHelper);
+    ///
+    // Axes helper
+    ///
+    const axesHelper = new THREE.AxesHelper(2);
+    scene.add(axesHelper);
 
-const RenderCube = () =>
-{
     const mesh = new THREE.Mesh(
         new THREE.BoxGeometry(1, 1, 1),
         new THREE.MeshBasicMaterial({ color: 0xff0000 })
@@ -21,9 +21,6 @@ const RenderCube = () =>
 
     // Add object to the scene
     scene.add(mesh);
-
-    // Canvas
-    const canvas = document.querySelector('canvas.webgl');
 
     // Size
     const sizes = {
@@ -47,34 +44,25 @@ const RenderCube = () =>
     controls.enableDamping = true;
     // controls.target.y = 1;
 
-    //Cursor
-    const cursor = {
-        x: 0,
-        y: 0
-    };
-
-    window.addEventListener('mousemove', (event) =>
-    {
-        cursor.x = event.clientX / sizes.width - 0.5;
-        cursor.y = - (event.clientY / sizes.height - 0.5);
-    });
-
     // Renderer
     const renderer = new THREE.WebGLRenderer({
         canvas: canvas
     });
     renderer.setSize(sizes.width, sizes.height);
 
+    const resize = () => {
+        const width = canvas.clientWidth
+        const height = canvas.clientHeight
+
+        renderer.setSize(width, height, false)
+        camera.aspect = width / height
+        camera.updateProjectionMatrix()
+    }
+    window.addEventListener('resize', resize)
+    resize()        
+
     const tick = () =>
     {
-        // //Update camera
-        // camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 2;
-        // camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 2;
-        // camera.position.y = cursor.y * 3;
-        // camera.lookAt(mesh.position);
-
-        // Camera controls : OrbitControls
-
         // Update controls: this is needed for the damping to work well
         controls.update();
 
@@ -85,4 +73,3 @@ const RenderCube = () =>
     }
     tick();
 }
-RenderCube();
