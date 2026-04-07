@@ -1,6 +1,7 @@
 // lesson14-lights.js
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js';
 import GUI from 'lil-gui'
 
 export default function init(canvas){
@@ -9,19 +10,80 @@ export default function init(canvas){
      */
     // Debug
     const gui = new GUI()
+    const lightTweaks = gui.addFolder('Light Tweaks');
+
+    const ui = document.querySelector('.ui');
+    ui.appendChild(gui.domElement);
 
     // Scene
     const scene = new THREE.Scene()
 
     /**
+     * Axes helper
+     */
+    const axesHelper = new THREE.AxesHelper(1);
+    scene.add(axesHelper);
+
+
+    /**
      * Lights
      */
-    // Ambient lights
+
+    // AmbientLight : Omnidirectional light on all geometries in the scene. All faces of the geometries are lit equally.
+    // Alone it has the same effect as MeshBasicMaterial.
     // const ambientLight = new THREE.AmbientLight(0xffffff, 1)
     const ambientLight = new THREE.AmbientLight()
     ambientLight.color = new THREE.Color(0xffffff)
     ambientLight.intensity = 1
     scene.add(ambientLight)
+    lightTweaks.add(ambientLight, 'intensity').name("AmbientLight intensity").min(0).max(3).step(0.001); 
+
+    // ADDING OTHER LIGHTS TO AMBIENTLIGHT MAKE THE SCENE MORE INTERSTING
+    
+    // DirectionalLight: Sun like light where rays act like they are travelling in parallel
+    const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.9)
+    scene.add(directionalLight)
+    // By default the light comes from above. change its position to make it light from another position
+    directionalLight.position.set(1, 0.25, 0);
+    lightTweaks.add(directionalLight, 'intensity').name('DirectionalLight intensity').min(0).max(3).step(0.001); 
+    const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.2);
+    scene.add(directionalLightHelper);
+
+    // HemisphereLight: Like Ambient light but one color comes from the sky and another form the ground
+    const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.9);
+    scene.add(hemisphereLight)
+    lightTweaks.add(hemisphereLight, 'intensity').name('HemisphereLight intensity').min(0).max(3).step(0.001); 
+    const hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 0.2);
+    scene.add(hemisphereLightHelper);
+
+    // PointLight: Act like a lighter (briquet in french)
+    // The third parameter is the distance which default value is 0, meaning infinite distance impact
+    // The second parameter is the decay. The lower the decay, the faster the light will decay. Its default value is 2
+    const pointLight = new THREE.PointLight(0xff9000, 1.5, 0, 2);
+    pointLight.position.set(1, - 0.5, 1);
+    scene.add(pointLight);
+    lightTweaks.add(pointLight, 'intensity').name('PointLight intensity').min(0).max(3).step(0.001); 
+    const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2);
+    scene.add(pointLightHelper);
+
+    // RectAreaLight: It's like the big rectangle lights used on photoshoot set. It acts like a directional light and a diffuse light
+    const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 6, 1, 1); 
+    scene.add(rectAreaLight);
+    rectAreaLight.position.set(-1.5, 0, 1.5);
+    rectAreaLight.lookAt(new THREE.Vector3()); // Look at the center of the scene
+    lightTweaks.add(rectAreaLight, 'intensity').name('RectAreaLight intensity').min(0).max(3).step(0.001); 
+    const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight);
+    scene.add(rectAreaLightHelper);
+
+    // SpotLight: It acts like a flash light. It's a cone starting at a point and oriented in a direction
+    const spotLight = new THREE.SpotLight(0x78ff00, 4.5, 10, Math.PI * 0.1, 0.25, 1);
+    spotLight.position.set(0, 2, 3);
+    spotLight.target.position.x = - 0.75;
+    scene.add(spotLight.target);
+    scene.add(spotLight);
+    lightTweaks.add(spotLight, 'intensity').name('SpotLight intensity').min(0).max(3).step(0.001); 
+    const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+    scene.add(spotLightHelper);
 
     /**
      * Objects

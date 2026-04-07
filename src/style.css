@@ -115,7 +115,7 @@ html, body {
 }
 
 .sidebar a.active {
-    background: orange;
+    background: rgb(0, 137, 141);
     color: black;
 }
 

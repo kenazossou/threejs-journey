@@ -6,7 +6,6 @@ import * as dat from 'lil-gui'
 import gsap from 'gsap'
 
 export default function init(canvas){
-    const ui = document.querySelector('.ui');
 
     /**
      * Debug
@@ -16,6 +15,8 @@ export default function init(canvas){
         title: 'Debug GUI',
         closeFolders: false
     });
+    
+    const ui = document.querySelector('.ui');
     ui.appendChild(gui.domElement);
     
     window.addEventListener('keydown', (event) =>
