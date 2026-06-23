@@ -4,6 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import { directPointLight } from 'three/src/nodes/lighting/PointLightNode.js'
 
+const baseUrl = import.meta.env.BASE_URL;
+
 export default function init(canvas){
     /**
      * Base
@@ -24,9 +26,9 @@ export default function init(canvas){
      * Textures
      */
     const textureLoader = new THREE.TextureLoader();
-    const bakedShadow = textureLoader.load('./textures/bakedShadow.jpg');
+    const bakedShadow = textureLoader.load(baseUrl + 'textures/bakedShadow.jpg');
     bakedShadow.colorSpace = THREE.SRGBColorSpace;
-    const simpleShadow = textureLoader.load('./textures/simpleShadow.jpg');
+    const simpleShadow = textureLoader.load(baseUrl + 'textures/simpleShadow.jpg');
 
     /**
      * Lights
@@ -223,4 +225,9 @@ export default function init(canvas){
     }
 
     tick()
+}
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
 }

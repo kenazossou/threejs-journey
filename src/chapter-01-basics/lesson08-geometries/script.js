@@ -1,4 +1,4 @@
-// lesson07-fullscreen-and-resizing.js
+// lesson08-geometries.js
 import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; // addons is an allias for 'examples/jsm'
@@ -13,14 +13,68 @@ export default function init(canvas){
     const axesHelper = new THREE.AxesHelper(2);
     scene.add(axesHelper);
 
-    const mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshBasicMaterial({ color: 0xff0000 })
-    )
-    mesh.position.x = 0
+    //////////////////////////////////////////////
+    ////////// Builtin geometry creation //////////
+    //////////////////////////////////////////////
+    const CreateBuiltinGeometry = () =>
+    {
+        return new THREE.Mesh(
+            new THREE.SphereGeometry(1, 32, 32),
+            new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+        )
+    }
+
+    //////////////////////////////////////////////
+    ////////// Custom geometry creation //////////
+    //////////////////////////////////////////////
+    const CreateCustomGeometry = () =>
+    {
+        // For this example, we will create a simple triangle
+
+        // create an empty BufferGeometry
+        const geometry = new THREE.BufferGeometry();
+
+        // Create a native JavaScript Float32Array to store our mesh vertices locations
+        // A triangle need 3 vertices and vertex position has 3 components (x, y, z)
+        const positionsArray = new Float32Array([
+            0, 0, 0, // First vertex
+            0, 1, 0, // Second vertex
+            1, 0, 0  // Third vertex
+        ]);
+
+
+        // Make that array a BufferAttribute to be able to send it to the BufferGeometry
+        const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3); // 3 corresponds to how much values make one vertex attribute
+        
+        // Add this BufferAttribute to the BufferGeometry
+        // The faces (here one) are automatically created following the order of the vertices
+        geometry.setAttribute("position", positionsAttribute); // Three internal shaders look for name value 'position' to position the vertices
+
+        return new THREE.Mesh(
+            geometry,
+            new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+        );
+    }
+
+    //////////////////////////////////////////////
+    //////////// Geometry rendering //////////////
+    //////////////////////////////////////////////
+    // // Builtin geometry
+    // const mesh = CreateBuiltinGeometry();
+
+    // Custom geometry
+    const mesh = CreateCustomGeometry();
+
+    //mesh.position.x = 0;
 
     // Add object to the scene
     scene.add(mesh);
+
+    // Size
+    const sizes = {
+        width: canvas.clientWidth,
+        height: canvas.clientHeight
+    };
 
     window.addEventListener('keydown', (event) =>
     {
@@ -51,12 +105,6 @@ export default function init(canvas){
             }
         }
     });
-
-    // Size
-    const sizes = {
-        width: canvas.clientWidth,
-        height: canvas.clientHeight
-    };
 
     const aspectRatio = sizes.width / sizes.height;
 
@@ -104,4 +152,9 @@ export default function init(canvas){
         window.requestAnimationFrame(tick);
     }
     tick();
+}
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
 }

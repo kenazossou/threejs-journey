@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 
+const baseUrl = import.meta.env.BASE_URL;
+
 export default function init(canvas){
     /**
      * Base
@@ -22,7 +24,7 @@ export default function init(canvas){
      * Textures
      */
     const textureLoader = new THREE.TextureLoader();
-    const particleTexture = textureLoader.load('./textures/particles/2.png');
+    const particleTexture = textureLoader.load(baseUrl + 'textures/particles/2.png');
 
     /**
      * Particles
@@ -163,4 +165,9 @@ export default function init(canvas){
 
     tick()
 
+}
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
 }

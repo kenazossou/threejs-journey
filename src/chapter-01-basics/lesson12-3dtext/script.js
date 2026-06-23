@@ -5,6 +5,8 @@ import GUI from 'lil-gui';
 import {FontLoader} from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 
+const baseUrl = import.meta.env.BASE_URL;
+
 export default function init(canvas){
     /**
      * Base
@@ -25,7 +27,7 @@ export default function init(canvas){
      * Textures
      */
     const textureLoader = new THREE.TextureLoader();
-    const matcapTexture = textureLoader.load('./textures/matcaps/8.png');
+    const matcapTexture = textureLoader.load(baseUrl + 'textures/matcaps/8.png');
     matcapTexture.colorSpace = THREE.SRGBColorSpace;
 
     // /**
@@ -41,7 +43,7 @@ export default function init(canvas){
      * Fonts
      */
     const fontLoader = new FontLoader();
-    fontLoader.load('./fonts/helvetiker_regular.typeface.json',
+    fontLoader.load(baseUrl + 'fonts/helvetiker_regular.typeface.json',
         (font) =>
         {
             console.log('Loaded !');
@@ -215,4 +217,9 @@ export default function init(canvas){
     }
 
     tick()
+}
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
 }

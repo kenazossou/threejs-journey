@@ -6,6 +6,8 @@ import { cos } from 'three/src/nodes/math/MathNode.js';
 import { PointShadowFilter } from 'three/src/nodes/lighting/PointShadowNode.js';
 import { HDRLoader } from 'three/examples/jsm/loaders/HDRLoader.js'
 
+const baseUrl = import.meta.env.BASE_URL;
+
 export default function init(canvas){
     //////////////////////////////////////////////
     ////////////////// Custom GUI ////////////////
@@ -30,7 +32,7 @@ export default function init(canvas){
      * Environment map
      */
     const hdrLoader = new HDRLoader();
-    hdrLoader.load('./textures/environmentMap/2k.hdr', (environmentMap) =>
+    hdrLoader.load(baseUrl + 'textures/environmentMap/2k.hdr', (environmentMap) =>
     {
         environmentMap.mapping = THREE.EquirectangularReflectionMapping;
 
@@ -55,23 +57,23 @@ export default function init(canvas){
      */
     const textureLoader = new THREE.TextureLoader();
 
-    const doorColorTexture = textureLoader.load('./textures/door/color.jpg');
-    const doorAlphaTexture = textureLoader.load('./textures/door/alpha.jpg');
-    const doorAmbientOcclusionTexture = textureLoader.load('./textures/door/ambientOcclusion.jpg');
-    const doorHeightTexture = textureLoader.load('./textures/door/height.jpg');
-    const doorNormalTexture = textureLoader.load('./textures/door/normal.jpg');
-    const doorMetalnessTexture = textureLoader.load('./textures/door/metalness.jpg');
-    const doorRoughnessTexture = textureLoader.load('./textures/door/roughness.jpg');
-    // const matcapTexture = textureLoader.load('./textures/matcaps/1.png');
-    // const matcapTexture = textureLoader.load('./textures/matcaps/2.png');
-    // const matcapTexture = textureLoader.load('./textures/matcaps/3.png');
-    // const matcapTexture = textureLoader.load('./textures/matcaps/4.png');
-    // const matcapTexture = textureLoader.load('./textures/matcaps/5.png');
-    // const matcapTexture = textureLoader.load('./textures/matcaps/6.png');
-    // const matcapTexture = textureLoader.load('./textures/matcaps/7.png');
-    const matcapTexture = textureLoader.load('./textures/matcaps/8.png');
+    const doorColorTexture = textureLoader.load(baseUrl + 'textures/door/color.jpg');
+    const doorAlphaTexture = textureLoader.load(baseUrl + 'textures/door/alpha.jpg');
+    const doorAmbientOcclusionTexture = textureLoader.load(baseUrl + 'textures/door/ambientOcclusion.jpg');
+    const doorHeightTexture = textureLoader.load(baseUrl + 'textures/door/height.jpg');
+    const doorNormalTexture = textureLoader.load(baseUrl + 'textures/door/normal.jpg');
+    const doorMetalnessTexture = textureLoader.load(baseUrl + 'textures/door/metalness.jpg');
+    const doorRoughnessTexture = textureLoader.load(baseUrl + 'textures/door/roughness.jpg');
+    // const matcapTexture = textureLoader.load(baseUrl + 'textures/matcaps/1.png');
+    // const matcapTexture = textureLoader.load(baseUrl + 'textures/matcaps/2.png');
+    // const matcapTexture = textureLoader.load(baseUrl + 'textures/matcaps/3.png');
+    // const matcapTexture = textureLoader.load(baseUrl + 'textures/matcaps/4.png');
+    // const matcapTexture = textureLoader.load(baseUrl + 'textures/matcaps/5.png');
+    // const matcapTexture = textureLoader.load(baseUrl + 'textures/matcaps/6.png');
+    // const matcapTexture = textureLoader.load(baseUrl + 'textures/matcaps/7.png');
+    const matcapTexture = textureLoader.load(baseUrl + 'textures/matcaps/8.png');
 
-    const gradientTexture = textureLoader.load('./textures/gradients/5.jpg');
+    const gradientTexture = textureLoader.load(baseUrl + 'textures/gradients/5.jpg');
 
     // Textures used as map and matcap are supposed to be encoded in sRGB
     doorColorTexture.colorSpace = THREE.SRGBColorSpace;
@@ -280,4 +282,9 @@ export default function init(canvas){
     }
 
     tick()
+}
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
 }

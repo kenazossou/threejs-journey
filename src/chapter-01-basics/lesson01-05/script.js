@@ -2,6 +2,10 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 
 export default function init(canvas){
+    if (!canvas) {
+        return
+    }
+
     // Scene
     const scene = new THREE.Scene();
 
@@ -156,4 +160,9 @@ export default function init(canvas){
         renderer.render(scene, camera);
     }
     // RenderGroup();
+}
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
 }

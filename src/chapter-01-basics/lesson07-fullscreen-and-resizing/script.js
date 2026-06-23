@@ -1,4 +1,4 @@
-// lesson06-camera.js
+// lesson07-fullscreen-and-resizing.js
 import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; // addons is an allias for 'examples/jsm'
@@ -7,9 +7,9 @@ export default function init(canvas){
     // Scene
     const scene = new THREE.Scene();
 
-    ///
-    // Axes helper
-    ///
+    /**
+     * Axes helper
+     */
     const axesHelper = new THREE.AxesHelper(2);
     scene.add(axesHelper);
 
@@ -22,11 +22,42 @@ export default function init(canvas){
     // Add object to the scene
     scene.add(mesh);
 
+    window.addEventListener('keydown', (event) =>
+    {
+        const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+        if(event.key.toLowerCase() === 'f')
+        {
+            if(!fullscreenElement)
+            {
+                if(canvas.requestFullscreen)
+                {
+                    canvas.requestFullscreen();
+                }
+                else if(canvas.webkitRequestFullscreen)
+                {
+                    canvas.webkitRequestFullscreen();
+                }
+            }
+            else
+            {
+                if(document.exitFullscreen)
+                {
+                    document.exitFullscreen();
+                }
+                else if(document.webkitExitFullscreen)
+                {
+                    document.webkitExitFullscreen();
+                }
+            }
+        }
+    });
+
     // Size
     const sizes = {
-        width: 800,
-        height: 600
+        width: canvas.clientWidth,
+        height: canvas.clientHeight
     };
+
     const aspectRatio = sizes.width / sizes.height;
 
     // Perspective Camera
@@ -42,7 +73,6 @@ export default function init(canvas){
     // and our canvas for the domElement of which we listen mouse events for
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
-    // controls.target.y = 1;
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({
@@ -63,6 +93,8 @@ export default function init(canvas){
 
     const tick = () =>
     {
+        // Camera controls : OrbitControls
+
         // Update controls: this is needed for the damping to work well
         controls.update();
 
@@ -72,4 +104,9 @@ export default function init(canvas){
         window.requestAnimationFrame(tick);
     }
     tick();
+}
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
 }

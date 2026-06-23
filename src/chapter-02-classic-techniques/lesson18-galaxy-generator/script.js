@@ -181,3 +181,8 @@ export default function init(canvas){
 
     tick()
 }
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
+}

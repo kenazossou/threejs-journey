@@ -27,11 +27,11 @@ export default function init(canvas){
     const textureLoader = new THREE.TextureLoader();
 
     // Floor
-    const floorAlphaTexture = textureLoader.load('./floor/alpha.webp');
-    const floorColorTexture = textureLoader.load('./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp')
-    const floorARMTexture = textureLoader.load('./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.webp')
-    const floorNormalTexture = textureLoader.load('./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.webp')
-    const floorDisplacementTexture = textureLoader.load('./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp')
+    const floorAlphaTexture = textureLoader.load('/floor/alpha.webp');
+    const floorColorTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp')
+    const floorARMTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.webp')
+    const floorNormalTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.webp')
+    const floorDisplacementTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp')
 
     // Set how many times we want the textures to repeat for the same surface
     floorColorTexture.repeat.set(8, 8)
@@ -55,15 +55,15 @@ export default function init(canvas){
     floorColorTexture.colorSpace = THREE.SRGBColorSpace;
 
     // Wall
-    const wallColorTexture = textureLoader.load('./wall/castle_brick_broken_06_1k/castle_brick_broken_06_diff_1k.webp')
-    const wallARMTexture = textureLoader.load('./wall/castle_brick_broken_06_1k/castle_brick_broken_06_arm_1k.webp')
-    const wallNormalTexture = textureLoader.load('./wall/castle_brick_broken_06_1k/castle_brick_broken_06_nor_gl_1k.webp')
+    const wallColorTexture = textureLoader.load('/wall/castle_brick_broken_06_1k/castle_brick_broken_06_diff_1k.webp')
+    const wallARMTexture = textureLoader.load('/wall/castle_brick_broken_06_1k/castle_brick_broken_06_arm_1k.webp')
+    const wallNormalTexture = textureLoader.load('/wall/castle_brick_broken_06_1k/castle_brick_broken_06_nor_gl_1k.webp')
     wallColorTexture.colorSpace = THREE.SRGBColorSpace;
 
     // Roof
-    const roofColorTexture = textureLoader.load('./roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp')
-    const roofARMTexture = textureLoader.load('./roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp')
-    const roofNormalTexture = textureLoader.load('./roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp')
+    const roofColorTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp')
+    const roofARMTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp')
+    const roofNormalTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp')
     roofColorTexture.colorSpace = THREE.SRGBColorSpace
 
     roofColorTexture.repeat.set(3, 1)
@@ -75,9 +75,9 @@ export default function init(canvas){
     roofNormalTexture.wrapS = THREE.RepeatWrapping    
 
     // Bush
-    const bushColorTexture = textureLoader.load('./bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.webp')
-    const bushARMTexture = textureLoader.load('./bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.webp')
-    const bushNormalTexture = textureLoader.load('./bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.webp')
+    const bushColorTexture = textureLoader.load('/bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.webp')
+    const bushARMTexture = textureLoader.load('/bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.webp')
+    const bushNormalTexture = textureLoader.load('/bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.webp')
     bushColorTexture.colorSpace = THREE.SRGBColorSpace
 
     bushColorTexture.repeat.set(2, 1)
@@ -89,9 +89,9 @@ export default function init(canvas){
     bushNormalTexture.wrapS = THREE.RepeatWrapping      
 
     // Grave
-    const graveColorTexture = textureLoader.load('./grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.webp')
-    const graveARMTexture = textureLoader.load('./grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.webp')
-    const graveNormalTexture = textureLoader.load('./grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.webp')
+    const graveColorTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.webp')
+    const graveARMTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.webp')
+    const graveNormalTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.webp')
     graveColorTexture.colorSpace = THREE.SRGBColorSpace
 
     graveColorTexture.repeat.set(0.3, 0.4)
@@ -99,13 +99,13 @@ export default function init(canvas){
     graveNormalTexture.repeat.set(0.3, 0.4)
 
     // Door
-    const doorColorTexture = textureLoader.load('./door/color.webp')
-    const doorAlphaTexture = textureLoader.load('./door/alpha.webp')
-    const doorAmbientOcclusionTexture = textureLoader.load('./door/ambientOcclusion.webp')
-    const doorHeightTexture = textureLoader.load('./door/height.webp')
-    const doorNormalTexture = textureLoader.load('./door/normal.webp')
-    const doorMetalnessTexture = textureLoader.load('./door/metalness.webp')
-    const doorRoughnessTexture = textureLoader.load('./door/roughness.webp')
+    const doorColorTexture = textureLoader.load('/door/color.webp')
+    const doorAlphaTexture = textureLoader.load('/door/alpha.webp')
+    const doorAmbientOcclusionTexture = textureLoader.load('/door/ambientOcclusion.webp')
+    const doorHeightTexture = textureLoader.load('/door/height.webp')
+    const doorNormalTexture = textureLoader.load('/door/normal.webp')
+    const doorMetalnessTexture = textureLoader.load('/door/metalness.webp')
+    const doorRoughnessTexture = textureLoader.load('/door/roughness.webp')
 
     doorColorTexture.colorSpace = THREE.SRGBColorSpace    
 
@@ -437,4 +437,9 @@ export default function init(canvas){
     }
 
     tick()
+}
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
 }

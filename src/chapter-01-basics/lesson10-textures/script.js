@@ -4,6 +4,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; // addons is an allias for 'examples/jsm'
 import * as dat from 'lil-gui'
 
+const baseUrl = import.meta.env.BASE_URL;
+
 export default function init(canvas){
     //////////////////////////////////////////////
     ////////////////// Custom GUI ////////////////
@@ -55,14 +57,14 @@ export default function init(canvas){
         console.log('loading error');
     };
 
-    const colorTexture = textureLoader.load('./textures/checkerboard-8x8.png');
+    const colorTexture = textureLoader.load(baseUrl + 'textures/checkerboard-8x8.png');
     colorTexture.colorSpace = THREE.SRGBColorSpace;
-    const alphaTexture = textureLoader.load('./textures/door/alpha.jpg');
-    const heightTexture = textureLoader.load('./textures/door/height.jpg');
-    const normalTexture = textureLoader.load('./textures/door/normal.jpg');
-    const ambientOcclusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg');
-    const metalnessTexture = textureLoader.load('./textures/door/metalness.jpg');
-    const roughnessTexture = textureLoader.load('./textures/door/roughness.jpg');
+    const alphaTexture = textureLoader.load(baseUrl + 'textures/door/alpha.jpg');
+    const heightTexture = textureLoader.load(baseUrl + 'textures/door/height.jpg');
+    const normalTexture = textureLoader.load(baseUrl + 'textures/door/normal.jpg');
+    const ambientOcclusionTexture = textureLoader.load(baseUrl + 'textures/door/ambientOcclusion.jpg');
+    const metalnessTexture = textureLoader.load(baseUrl + 'textures/door/metalness.jpg');
+    const roughnessTexture = textureLoader.load(baseUrl + 'textures/door/roughness.jpg');
 
     /**
      * Transforming texture
@@ -155,4 +157,9 @@ export default function init(canvas){
     };
 
     tick();
+}
+
+const canvas = document.querySelector('canvas.webgl')
+if (canvas) {
+    init(canvas)
 }
