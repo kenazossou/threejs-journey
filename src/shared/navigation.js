@@ -1,4 +1,4 @@
-import '../style.css'
+import '../shared/navigation.css'
 
 function formatChapterTitle(folderName) {
     const match = folderName.match(/^chapter-(\d+)-(.+)$/)
@@ -31,7 +31,7 @@ function formatLessonTitle(folderName) {
         .join(' ')
 }
 
-function getLessonEntries() {
+export function getLessonEntries() {
     const entries = import.meta.glob('../chapter-*/**/index.html', { eager: true, as: 'url' })
 
     return Object.keys(entries)
@@ -48,7 +48,7 @@ function getLessonEntries() {
         })
 }
 
-function toLessonHref(path) {
+export function toLessonHref(path) {
     return new URL(path.replace(/^\.\//, ''), window.location.origin + import.meta.env.BASE_URL).toString()
 }
 
