@@ -152,10 +152,15 @@ window.addEventListener('mousemove', (event) =>
  * Animate
  */
 const clock = new THREE.Clock()
+let previousTime = 0;
 
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+    const deltaTime = elapsedTime - previousTime
+    previousTime = elapsedTime
+
+    console.log(deltaTime)
 
     // Animate meshes
     for(const mesh of sectionMeshes)
@@ -168,10 +173,10 @@ const tick = () =>
     camera.position.y = - scrollY / sizes.height * objectsDistance
 
     const parallaxX = cursor.x
-    const parallaxY = - cursor.y
+    const parallaxY = -cursor.y
 
-    cameraGroup.position.x = parallaxX
-    cameraGroup.position.y = parallaxY
+    cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 5 * deltaTime;
+    cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime;
 
     // Render
     renderer.render(scene, camera)
